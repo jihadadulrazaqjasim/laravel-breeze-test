@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Post;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('api')->get('/user', function (Request $request) {
+
     return $request->user();
+});
+
+Route::get('/posts/{post}', function (Post $post) {
+    Gate::authorize('view', $post);
+
+    return $post;
 });

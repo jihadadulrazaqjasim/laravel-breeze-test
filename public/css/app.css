@@ -732,6 +732,9 @@ select {
 .w-48 {
   width: 12rem;
 }
+.w-40 {
+  width: 10rem;
+}
 .min-w-full {
   min-width: 100%;
 }

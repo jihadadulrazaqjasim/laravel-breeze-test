@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 /**
@@ -23,7 +24,8 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->name,
             'body' =>$this->faker->paragraph,
-            'user_id'=>$this->faker->randomElement($users)
+            'user_id'=>$this->faker->randomElement($users),
+            'post_image'=>$this->faker->image(public_path('images'),400,300, null, false) 
         ];
     }
 }

@@ -46,7 +46,7 @@
 
     <x-form-create-validation :errors="$errors" />
 
-    <form action="{{ URL::to('post') }}" method="POST">
+    <form action="{{ URL::to('post') }}" method="POST" enctype="multipart/form-data">
         @method('post')
         @csrf
         <br>
@@ -63,6 +63,14 @@
             <x-input type="text" placeholder="enter body" class="block mt-1 w-full" name="body" id="body" />
         </div>
         <br>
+
+        {{-- Image --}}
+        <div>
+            <x-label for="post_image" :value="_('Image')" />
+            <x-input type="file" class="block mt-1 w-full" name="post_image" id="post_image" />
+        </div>
+        <br>
+
         {{-- Button --}}
         <div>
             <x-button class="text-green-400 hover:text-green-600 ml-3">

@@ -32,13 +32,18 @@
                 {{ $post->body }}
             </x-slot>
 
+            <x-slot name="image">
+                <img src="{{ asset('images/' . $post->post_image) }}" alt=" post image" class="w-40">
+            </x-slot>
+
             <x-slot name="delete">
                 <form action="{{ URL::to('post', $post->id) }}" method="POST">
                     @csrf
                     @method('delete')
 
-                    <x-button type="submit" class="delete rounded-full bg-red-500 hover:bg-red-700 focus:bg-red-700">Delete</x-button>
-
+                    <x-button type="submit" class="delete rounded-full bg-red-500 hover:bg-red-700 focus:bg-red-700">
+                        Delete
+                    </x-button>
                 </form>
             </x-slot>
         </x-posts>

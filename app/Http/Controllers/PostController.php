@@ -47,14 +47,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|unique:posts|max:20',
             'body' => 'required',
+            'post_image' => 'required|mimes:png,jpg,jpeg|max:5048'
         ]);
+
         $message = '';
         try {
             $data = $request->all();
             $data['user_id'] = Auth::user()->id;
+            $imageName = time() . '-' . $request->title . '.' . $request->post_image->extension();
+            $request->post_image->move(public_path('images'), $imageName);
+            $data['post_image'] = $imageName;
+
             if (Post::create($data)) {
                 $message = "saved successfully";
             }

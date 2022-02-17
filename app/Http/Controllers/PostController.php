@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
@@ -35,7 +36,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        
+        return view('posts.create');
     }
 
     /**
@@ -47,9 +48,25 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|unique:posts|max:255',
+            'title' => 'required|unique:posts|max:20',
             'body' => 'required',
         ]);
+        $message = '';
+        try {
+            $data = $request->all();
+            $data['user_id'] = Auth::user()->id;
+            if (Post::create($data)) {
+                $message = "saved successfully";
+            }
+            return redirect()->route('post.index')->with(['status' => 'success', 'message' => $message]);
+        } catch (\Exception $e) {
+            Helper::addLog($e);
+            $message = "error while saving";
+            return [
+                'message' => $message,
+                'status' => 'error'
+            ];
+        }
     }
 
     /**
@@ -97,9 +114,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-     
+
         if (Auth::user()->can('delete', $post))
-           $post->delete();
+            $post->delete();
 
         return redirect('/post');
     }

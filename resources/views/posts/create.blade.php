@@ -8,7 +8,6 @@
 
     <x-form-create-validation :errors="$errors" />
 
-
     <form action="{{ URL::to('post') }}" method="POST">
         @method('post')
         @csrf
@@ -19,6 +18,7 @@
             <x-input type="text" placeholder="enter title" class="block mt-1 w-full" name="title" id="title" />
         </div>
 
+        
         {{-- Body --}}
         <div>
             <x-label for="body" :value="_('Body')" />

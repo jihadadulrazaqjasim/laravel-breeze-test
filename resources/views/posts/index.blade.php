@@ -19,15 +19,6 @@
             {{ session('message') }}
         </div>
     @endif
-    {{-- @json($posts) --}}
-
-
-
-    {{-- <h1 class="font-bold">
-        {{ $post->title }}
-    </h1>
-    <p class="text-justify max-w-3xl">{{ $post->body }}</p>
-    <br> --}}
 
     @foreach ($posts as $post)
         {{-- @can('view-post', $post) --}}

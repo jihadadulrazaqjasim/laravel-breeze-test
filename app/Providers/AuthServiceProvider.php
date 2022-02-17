@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
@@ -16,7 +18,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Post' => 'App\Policies\PostPolicy',
+        // Post::class  =>PostPolicy::class
     ];
 
     /**
@@ -28,8 +32,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-post', function ( User $user,Post $post) {
-         
+        Gate::define('view-post', function ($user,$post) {
+            // Log::info(json_encode($post));
+            // return true;
         return $user->id == $post->user_id;
         });
     }

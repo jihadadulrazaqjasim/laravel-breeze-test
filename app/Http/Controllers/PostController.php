@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
+
+    public function __constructor()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +23,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = DB::table('posts')->get();
+
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -23,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +46,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+        ]);
     }
 
     /**
@@ -45,7 +60,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        // Log::info('postid: '.$id);
+        $post = Post::find($id);
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
@@ -79,6 +96,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+     
+        if (Auth::user()->can('delete', $post))
+           $post->delete();
+
+        return redirect('/post');
     }
 }

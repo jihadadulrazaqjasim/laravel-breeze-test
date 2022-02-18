@@ -5,7 +5,7 @@
 
     <div>{{ $body }}</div>
 
-    <div>{{ $image }}</div>
-
-    <div>{{ $delete }}</div>
+    <div>{{$image}}</div>
+    
+    <div>{{$delete}}</div>
 </div>

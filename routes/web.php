@@ -19,6 +19,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+
+    // $re = '/\d/i';
+    // $str = 'Theraini nSP1 AINfallsmain2yonth1e3plains.';
+    // (preg_match_all($re, $str, $matches, PREG_OFFSET_CAPTURE, 0));
+    // // Print the entire match result
+    // var_dump($matches[0]);
+
+
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 

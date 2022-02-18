@@ -22,7 +22,7 @@
 
     @foreach ($posts as $post)
         {{-- @can('view-post', $post) --}}
-        <x-posts class="h-auto" :value="__('hii')">
+        <x-posts class="h-auto " :value="__('hii')">
 
             <x-slot name="title">
                 <h1 class="text-gray-700 text-lg font-bold">{{ $post->title }}</h1>
@@ -35,8 +35,10 @@
             <x-slot name="image">
                 <img src="{{ asset('images/' . $post->post_image) }}" alt=" post image" class="w-40">
             </x-slot>
-
+          
+           
             <x-slot name="delete">
+                <br>
                 <form action="{{ URL::to('post', $post->id) }}" method="POST">
                     @csrf
                     @method('delete')
